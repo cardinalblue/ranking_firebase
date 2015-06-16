@@ -1,32 +1,38 @@
-var ItemPage = React.createClass({
-    mixins: [ReactFireMixin],
-    clickVote: function(item) {
-        item.vote = item.vote + 1;
-        this.firebaseRef.child("list").child(item.name).update(item);
+var VoteItem = React.createClass({
+    clickVote: function(e) {
+        var t = this.props.item;
+        t.vote = t.vote + 1; // FIXME take care issue of race condition
+        this.props.firebaseRef.update(t);
     },
+    render: function() {
+        var item = this.props.item;
+        return <li>
+            ( {item.vote} )
+            <a href={item.url}>{item.name}</a>
+            <input type="button" onClick={this.clickVote} value="Vote" />
+           </li>;
+    }
+});
+
+var VotePage = React.createClass({
+    mixins: [ReactFireMixin],
     getInitialState: function() {
-        this.firebaseRef = new Firebase("https://prada-test.firebaseio.com/items/" + this.props.name);
+        this.firebaseRef = new Firebase("https://prada-test.firebaseio.com/items/" + this.props.name + "/list/");
         return {items: []};
     },
     componentWillMount: function() {
-      this.bindAsArray(this.firebaseRef.child("list"), "items");
-    },
-    clickBack: function(e) {
-      this.props.onBackClick(e);
-    },
-    createItem : function(item, index) {
-        return <li key={index}>
-                    ({item.vote})
-                    <a href={item.url}>{item.name}</a>
-                    <input type="button" onClick={ this.clickVote.bind(this, item) } value="Vote" />
-               </li>;
+      this.bindAsArray(this.firebaseRef, "items");
     },
     render: function() {
       this.state.items.sort(function(a, b) {return b.vote - a.vote});
       return <div>
                 <h1>{this.props.name}</h1>
-                <input type="button" onClick={this.clickBack} value="Back" />
-                <ul>{this.state.items.map(this.createItem)}</ul>
+                <input type="button" onClick={ this.props.onBackClick } value="Back" />
+                <ul>{this.state.items.map(function(item, index) {
+                    return <VoteItem key={index} item={item}
+                            firebaseRef={this.firebaseRef.child(item.name)} />
+                    })}
+                </ul>
              </div>;
     }
 });
@@ -165,7 +171,7 @@ var RankingApplication = React.createClass({
                     authData={ this.state.authData } />;
                 break;
             case 2:
-                page = <ItemPage name={this.state.selected_item} onBackClick={this.pressBackButton} />;
+                page = <VotePage name={this.state.selected_item} onBackClick={this.pressBackButton} />;
                 break;
             case 1:
             default:

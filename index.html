@@ -41,6 +41,7 @@
                    </li>;
         },
         render: function() {
+          this.state.items.sort(function(a, b) {return b.vote - a.vote});
           return <div>
                     <input type="button" onClick={this.clickBack} value="Back" />
                     <ul>{this.state.items.map(this.createItem)}</ul>

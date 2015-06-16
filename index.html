@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <!-- Firebase JS -->
+    <script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/reactfire/0.1.6/reactfire.min.js"></script>
+    <title>Basic Example</title>
+  </head>
+  <body>
+    <h1>The Best Song Ever</h1>
+    <div id="container">
+      <p>
+        If you can see this, React is not working right.
+        If you checked out the source from GitHub make sure to run <code>grunt</code>.
+      </p>
+    </div>
+    <script src="../../build/react.min.js"></script>
+    <script src="../../build/JSXTransformer.js"></script>
+    <script type="text/jsx">
+      var ExampleApplication = React.createClass({
+        mixins: [ReactFireMixin],
+        clickVote: function(item) {
+            item.vote = item.vote + 1;
+            this.firebaseRef.child("list").child(item.name).update(item);
+        },
+        getInitialState: function() {
+            this.firebaseRef = new Firebase("https://prada-test.firebaseio.com/items/best_song_ever");
+            return {items: []};
+        },
+        componentWillMount: function() {
+          this.bindAsArray(this.firebaseRef.child("list"), "items");
+        },
+        createItem : function(item, index) {
+            return <li key={index}>
+                        ({item.vote})
+                        <a href={item.url}>{item.name}</a>
+                        <input type="button" onClick={ this.clickVote.bind(this, item) } value="Vote" />
+                   </li>;
+        },
+        render: function() {
+          
+          return <ul>{this.state.items.map(this.createItem)}</ul>;
+        }
+      });
+      setInterval(function() {
+        React.render(
+            <ExampleApplication />,
+            document.getElementById('container')
+        );
+      }, 100);
+    </script>
+  </body>
+</html>

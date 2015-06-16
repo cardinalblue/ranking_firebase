@@ -2,7 +2,7 @@ var VoteItem = React.createClass({
     clickVote: function(e) {
         var t = this.props.item;
         t.vote = t.vote + 1; // FIXME take care issue of race condition
-        this.props.firebaseRef.update(t);
+        this.props.itemRef.update(t);
     },
     render: function() {
         var item = this.props.item;
@@ -17,23 +17,33 @@ var VoteItem = React.createClass({
 var VotePage = React.createClass({
     mixins: [ReactFireMixin],
     getInitialState: function() {
-        this.firebaseRef = new Firebase("https://prada-test.firebaseio.com/items/" + this.props.name + "/list/");
+        this.listRef = new Firebase("https://prada-test.firebaseio.com/items/" + this.props.name).child("list");
         return {items: []};
     },
     componentWillMount: function() {
-      this.bindAsArray(this.firebaseRef, "items");
+      this.bindAsArray(this.listRef, "items");
+    },
+    createItem: function(item, index) {
+        return <VoteItem key={index} item={item} itemRef={this.listRef.child(item.name)} />
     },
     render: function() {
       this.state.items.sort(function(a, b) {return b.vote - a.vote});
       return <div>
                 <h1>{this.props.name}</h1>
                 <input type="button" onClick={ this.props.onBackClick } value="Back" />
-                <ul>{this.state.items.map(function(item, index) {
-                    return <VoteItem key={index} item={item}
-                            firebaseRef={this.firebaseRef.child(item.name)} />
-                    })}
-                </ul>
+                <ul>{this.state.items.map(this.createItem)}</ul>
              </div>;
+    }
+});
+
+var PopularItem = React.createClass({
+    clickItem:function(e) {
+        this.props.onClickItem(this.props.itemName);
+    },
+    render: function() {
+        return <li>
+                <input type="button" onClick={this.clickItem} value={this.props.itemName} />
+               </li>;
     }
 });
 
@@ -50,9 +60,7 @@ var PopularPage = React.createClass({
         this.props.onItemClick(itemName);
     },
     createItem : function(item, index) {
-        return <li key={index}>
-                <input type="button" onClick={ this.clickItem.bind(this, item.name) } value={item.name} />
-            </li>;
+        return <PopularItem key={index} onClickItem={this.clickItem} itemName={item.name} />
     },
     render: function() {
       return <div>
@@ -153,8 +161,7 @@ var RankingApplication = React.createClass({
         if (!e) { this.state.authData = authData; }
     },
     clickLogin : function(e) {
-        var ref = new Firebase("https://prada-test.firebaseio.com");
-        ref.authWithOAuthPopup("facebook", this.loginFacebook);
+        new Firebase("https://prada-test.firebaseio.com").authWithOAuthPopup("facebook", this.loginFacebook);
     },
     clickAddButton : function(e) {
         this.state.pageId = 3; // move to add page

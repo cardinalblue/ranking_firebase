@@ -18,7 +18,6 @@ let App = React.createClass({
       });
     },
     render() {
-        {/* FIXME navId is not work after integarte react route */}
         return <div>
                 <nav className="navbar navbar-default navbar-static-top ">
                     <div className="container-fluid">

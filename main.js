@@ -1,14 +1,19 @@
-var VoteItem = React.createClass({
+var VoteButton = React.createClass({
     clickVote: function(e) {
-        var t = this.props.item;
-        t.vote = t.vote + 1; // FIXME take care issue of race condition
-        this.props.itemRef.update(t);
+        var vote = this.props.voteNum + 1; // FIXME take care issue of race condition
+        this.props.voteRef.set(vote);
     },
+    render: function() {
+        return <button type="button" className="btn btn-default" onClick={this.clickVote}>Vote</button>;
+    }
+});
+
+var VoteItem = React.createClass({
     render: function() {
         var item = this.props.item;
         return <li className="list-group-item">
             <span className="badge">{item.vote}</span>
-            <button type="button" className="btn btn-default" onClick={this.clickVote}>Vote</button>
+            <VoteButton voteRef={this.props.voteRef} voteNum={item.vote}/>
             <a href={item.url}>{item.name}</a>
            </li>;
     }
@@ -48,7 +53,7 @@ var VotePage = React.createClass({
         }.bind(this));
     },
     createItem: function(item, index) {
-        return <VoteItem key={index} item={item} itemRef={this.listRef.child(item.name)} />
+        return <VoteItem key={index} item={item} voteRef={this.listRef.child(item.name).child("vote")} />
     },
     render: function() {
       return <div>

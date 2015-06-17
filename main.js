@@ -15,19 +15,42 @@ var VoteItem = React.createClass({
 });
 
 var VotePage = React.createClass({
-    mixins: [ReactFireMixin],
     getInitialState: function() {
         this.listRef = new Firebase("https://prada-test.firebaseio.com/items/" + this.props.name).child("list");
         return {items: []};
     },
+     /* Returns true if the inputted object is a JavaScript array */
+    _isArray: function(obj) {
+        return (Object.prototype.toString.call(obj) === "[object Array]");
+    },
+    /* Converts a Firebase object to a JavaScript array */
+    _toArray: function(obj) {
+        var out = [];
+        if (obj) {
+          if (this._isArray(obj)) {
+            out = obj;
+          } else if (typeof(obj) === "object") {
+            for (var key in obj) {
+              if (obj.hasOwnProperty(key)) {
+                out.push(obj[key]);
+              }
+            }
+          }
+        }
+        return out;
+    },
     componentWillMount: function() {
-      this.bindAsArray(this.listRef, "items");
+        this.listRef.on("value", function(dataSnapshot) {
+          var newState = {};
+          newState.items = this._toArray(dataSnapshot.val());
+          newState.items.sort(function(a, b) {return b.vote - a.vote});
+          this.setState(newState);
+        }.bind(this));
     },
     createItem: function(item, index) {
         return <VoteItem key={index} item={item} itemRef={this.listRef.child(item.name)} />
     },
     render: function() {
-      this.state.items.sort(function(a, b) {return b.vote - a.vote});
       return <div>
                 <ul className="list-group">
                     {this.state.items.map(this.createItem)}

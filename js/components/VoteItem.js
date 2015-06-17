@@ -17,6 +17,8 @@ let VoteItem = React.createClass({
             <span className="badge">{item.vote}</span>
             <VoteButton voteRef={this.props.voteRef} voteNum={item.vote}/>
             <a href={item.url}>{item.name}</a>
+            {item.url.indexOf('youtube') == -1 ? <img src={item.url} /> :
+            <iframe width="420" height="315" src={item.url} frameborder="0" allowfullscreen></iframe> }
            </li>;
     }
 });

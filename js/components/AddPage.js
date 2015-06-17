@@ -16,6 +16,7 @@ let AdderList = React.createClass({
     addItem(e) {
         var nextItems = this.state.items.concat([{
             name : this.state.item_name,
+            vote : 0,
             url : this.state.item_url}]);
         this.setState({items: nextItems, item_name: '', item_url: ''});
         this.props.syncData(nextItems);
@@ -42,28 +43,21 @@ let AdderList = React.createClass({
 var AddPage = React.createClass({
     mixins: [Navigation],
     getInitialState() {
-        return {title: "", authData: auth.getAuthData() };
+        return {title: "", authData: auth.getAuthData(), savedItem: null};
     },
     onTitleChange(e) {
         this.setState({title: e.target.value});
     },
     onSavedList(e) {
-        if (!e) { this.transitionTo('votePage', {itemName: this.state.title}) }
+        if (!e) { this.transitionTo('votePage', {itemName: this.state.savedItem.key()}) }
     },
     onSavedUser(e) {
         // TODO check the key is duplicate or not. if it's exist we will override this values
-        var ref = new Firebase("https://prada-test.firebaseio.com/items/" + this.state.title);
-        var len = this.items.length; // FIXME list get from VoteList
-        var list = {};
-        for (var i = 0; i < len; i++) {
-            var t = this.items[i];
-            list[t.name] = t;
-            list[t.name].vote = 0;
-        }
-        ref.set({
+        var ref = new Firebase("https://prada-test.firebaseio.com/items/");
+        this.state.savedItem = ref.push({
             owner: this.state.authData.uid,
             name: this.state.title,
-            list: list
+            list: this.items
         }, this.onSavedList);
     },
     clickSubmit(e) {

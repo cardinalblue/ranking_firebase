@@ -8,12 +8,10 @@ let PopularItem = React.createClass({
         return 999;
     },
     render() {
-
-
         return <li className="list-group-item">
                 <span className="badge">{this.countVote()}</span>
                 <Link to="votePage"
-                  params={{itemName:this.props.itemName}}>{this.props.itemName}</Link>
+                  params={{itemName:this.props.itemKey}}>{this.props.itemName}</Link>
                </li>;
     }
 });

@@ -91,9 +91,8 @@ var AdderList = React.createClass({
         var nextItems = this.state.items.concat([{
             name : this.state.item_name,
             url : this.state.item_url}]);
-        var nextText = '';
-        this.setState({items: nextItems, item_name: nextText, item_url: nextText});
-        this.props.syncData(this.state.items);
+        this.setState({items: nextItems, item_name: '', item_url: ''});
+        this.props.syncData(nextItems);
     },
     render: function() {
         var createItem = function(item, index) {
@@ -124,7 +123,7 @@ var AddPage = React.createClass({
     onSavedList : function(e) {
         if (!e) { this.props.onFinishAddList(); }
     },
-    onSaveUser : function(e) {
+    onSavedUser : function(e) {
         // TODO check the key is duplicate or not. if it's exist we will override this values
         var ref = new Firebase("https://prada-test.firebaseio.com/items/" + this.state.title);
         var len = this.items.length; // FIXME list get from VoteList
@@ -147,8 +146,8 @@ var AddPage = React.createClass({
         }
         var uid = this.props.authData.uid;
         var userRef = new Firebase("https://prada-test.firebaseio.com/Users/" + uid);
-        // save user instance first
-        userRef.set(this.props.authData, this.onSaveUser);
+        // save user data first
+        userRef.set(this.props.authData, this.onSavedUser);
     },
     syncData : function(items) {
         this.items = items;

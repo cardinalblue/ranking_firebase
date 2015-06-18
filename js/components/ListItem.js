@@ -1,14 +1,17 @@
 import React from 'react';
 
 let VoteButton = React.createClass({
+    getInitialState() {
+        return {voteNum: this.props.voteNum};
+    },
     clickVote(e) {
-        // TODO sync vote number at local to increasing the response time
-        var vote = this.props.voteNum + 1; // FIXME take care issue of race condition
+        // FIXME take care issue of race condition
+        var vote = this.state.voteNum + 1;
         this.props.voteRef.set(vote);
+        this.setState({voteNum: vote});
     },
     render() {
         return <span className="glyphicon glyphicon-ok" aria-hidden="true" onClick={this.clickVote}></span>;
-
     }
 });
 

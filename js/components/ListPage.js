@@ -25,15 +25,14 @@ let ListPage = React.createClass({
         this.transitionTo('addItemPage', {listKey: this.props.params.listKey})
     },
     render() {
-      return <div>
-                <div className="jumbotron">
-                    <h1>{this.state.title}</h1>
+      return  (
+                <div>
+                    <ul className="collection">
+                        {this.state.items.map(this.createItem)}
+                    </ul>
+                    <Link to="addItemPage" className="btn" role="button" params={{listKey: this.props.params.listKey}}>Add Item</Link>
                 </div>
-                <ul className="list-group">
-                    {this.state.items.map(this.createItem)}
-                </ul>
-                <Link to="addItemPage" className="btn" role="button" params={{listKey: this.props.params.listKey}}>Add Item</Link>
-             </div>;
+              );
     }
 });
 

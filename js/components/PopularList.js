@@ -8,10 +8,21 @@ let PopularList = React.createClass({
         return 999;
     },
     render() {
-        return <li className="list-group-item">
-                <span className="badge">{this.countVote()}</span>
-                <Link to="listPage" params={{listKey:this.props.listKey}}>{this.props.listName}</Link>
-               </li>;
+        return  (
+                    <li className="collection-item avatar">
+                        <Link   to="listPage" 
+                                params={{listKey: this.props.listKey}}>
+                            <img src="http://lorempixel.com/g/70/70/" alt="" />
+
+                            <div className="title">{this.props.listName}</div>
+                            <i className="mdi-social-whatshot" />
+                            <i className="mdi-social-whatshot" />
+                            <i className="mdi-social-whatshot" />
+                            <i className="mdi-social-whatshot" />
+                            <i className="mdi-social-whatshot" /> 
+                        </Link> 
+                    </li>
+                );
     }
 });
 

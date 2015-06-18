@@ -19,24 +19,23 @@ let App = React.createClass({
       });
     },
     render() {
-        return <div>
-                <nav className="navbar navbar-default navbar-static-top ">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <a className="navbar-brand" href="#">
-                                Ranking
-                            </a>
-                        </div>
-                        { !this.state.authData ? null : <ul className="nav navbar-nav navbar-right">
-                            <li><Link to="addListPage" className="btn" role="button">Add List</Link></li>
-                        </ul> }
-                        { !!this.state.authData ? null : <ul className="nav navbar-nav navbar-right">
-                            <li><a className="btn" role="button" onClick={this.clickLogin}>Login</a></li>
-                        </ul> }
+
+        return (<div>
+                  <nav className="teal">
+                    <div className="nav-wrapper">
+                      <a href="#" className="brand-logo">Ranking</a>
+                      { !this.state.authData ?  null : <ul id="nav-mobile" className="right hide-on-med-and-down">
+                                                         <li><Link to="addListPage" role="button">Add List</Link></li>
+                                                       </ul>                                      
+                      }
+                      { !!this.state.authData ? null :  <ul id="nav-mobile" className="right hide-on-med-and-down">
+                                                          <li><a className="btn" role="button" onClick={this.clickLogin}>Login</a></li>
+                                                        </ul> 
+                      }
                     </div>
-                </nav>
-                <RouteHandler/>
-               </div>;
+                  </nav>
+                  <RouteHandler/>
+                </div>);
     }
 });
 

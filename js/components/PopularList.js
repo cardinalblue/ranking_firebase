@@ -12,7 +12,7 @@ let PopularList = React.createClass({
                     <li className="collection-item avatar">
                         <Link   to="listPage" 
                                 params={{listKey: this.props.listKey}}>
-                            <img src="http://lorempixel.com/g/70/70/" alt="" />
+                            <img src={this.props.listImg} alt="" />
 
                             <div className="title">{this.props.listName}</div>
                             <i className="mdi-social-whatshot" />

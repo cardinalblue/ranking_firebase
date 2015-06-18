@@ -19,6 +19,7 @@ let PopularPage = React.createClass({
     },
     createItem(item, index) {
         return <PopularList key={index} onClickItem={this.clickItem}
+                 listImg={item.list[Object.keys(item.list)[0]].url}
                  listKey={item.key}
                  listName={item.name} />
     },

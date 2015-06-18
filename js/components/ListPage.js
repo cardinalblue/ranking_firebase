@@ -26,8 +26,8 @@ let ListPage = React.createClass({
     },
     render() {
       return  (
-                <div>
-                    <ul className="collection">
+                <div className="center-align">
+                    <ul className="collection list-collection">
                         {this.state.items.map(this.createItem)}
                     </ul>
                     <Link to="addItemPage" className="btn" role="button" params={{listKey: this.props.params.listKey}}>Add Item</Link>

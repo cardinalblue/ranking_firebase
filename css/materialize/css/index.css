@@ -1,17 +1,22 @@
-.collection .voteItem {
+.list-collection {
+  margin-top: 0;
+  border: 0;
+}
+
+.list-collection .listItem {
   position: relative;
   padding: 0;
   border: 0;
   box-shadow: 0px -5px 61px 0px rgba(0, 0, 0, 1);
 }
 
-.collection .voteItem img{
+.list-collection .listItem img{
   width:  100%;
   height: 100%;
   vertical-align: top;
 }
 
-.collection .voteItem .description{
+.list-collection .listItem .description{
   position: absolute;
   width: 100%;
   bottom:   20px;
@@ -19,32 +24,55 @@
   z-index: 1;
 }
 
-.collection .voteItem .description .title{
+.list-collection .listItem .description .title{
   width:   70%;
   display: inline-block;
   color:   white;
   margin:  0;
 }
 
-.collection .voteItem .description .voteTab{
+.list-collection .listItem .description .voteTab{
   width: 30%;
   display: inline-block;
   vertical-align: top;
 }
 
-.collection .voteItem .description .voteTab .upVoteBtn{
+.list-collection .listItem .description .voteTab .upVoteBtn{
   width: 40px;
   height: 40px;
   margin-right: 30px;
 }
 
-.collection .voteItem .description .voteTab .upVoteBtn i{
+.list-collection .listItem .description .voteTab .upVoteBtn i{
   line-height: 40px;
 }
 
-.collection .voteItem .description .voteTab .voteCounter {
+.list-collection .listItem .description .voteTab .voteCounter {
   color: white;
   line-height: 40px;
 }
 
+
+/* AddItemPage */
+.addItem-container label {
+  color: white;
+  font-size: 16px;
+}
+
+.addItem-container label.active {
+  font-size: 14px;
+}
+
+.addItem-container input {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.50);
+}
+
+.addItem-container .addItemBtn {
+  margin: 20px;
+  width: 250px;
+  height: 50px;
+  border-radius: 5px;
+}
+}
   

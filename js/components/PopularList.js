@@ -7,21 +7,23 @@ let PopularList = React.createClass({
         // TODO count number from firebase db
         return 999;
     },
+    
     render() {
-        return  (
-                    <li className="collection-item avatar">
-                        <Link   to="listPage" 
-                                params={{listKey: this.props.listKey}}>
-                            <img src={this.props.listImg} alt="" />
+        return (
+                <li className="collection-item avatar">
+                  <Link to="listPage" 
+                        params={{listKey: this.props.listKey}}>
 
-                            <div className="title">{this.props.listName}</div>
-                            <i className="mdi-social-whatshot" />
-                            <i className="mdi-social-whatshot" />
-                            <i className="mdi-social-whatshot" />
-                            <i className="mdi-social-whatshot" />
-                            <i className="mdi-social-whatshot" /> 
-                        </Link> 
-                    </li>
+                    <img src={this.props.listImg} alt="listImage" />
+
+                    <div className="title">{this.props.listName}</div>
+                    <i className="mdi-social-whatshot" />
+                    <i className="mdi-social-whatshot" />
+                    <i className="mdi-social-whatshot" />
+                    <i className="mdi-social-whatshot" />
+                    <i className="mdi-social-whatshot" /> 
+                  </Link> 
+                </li>
                 );
     }
 });

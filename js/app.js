@@ -10,32 +10,37 @@ import auth from './auth';
 
 let App = React.createClass({
     getInitialState() {
-        return {authData: null};
+        return {
+            authData: null 
+        };
     },
+
     clickLogin (e) {
-      var self = this;
-      auth.login(function(e, authData) {
-        self.setState({authData: authData});
-      });
+        auth.login(function(e, authData) {
+            this.setState({authData: authData});
+        }.bind(this));
     },
+
     render() {
 
-        return (<div>
+        return (
+                <div>
                   <nav className="teal">
                     <div className="nav-wrapper">
                       <a href="#" className="brand-logo">Ranking</a>
-                      { !this.state.authData ?  null : <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                                         <li><Link to="addListPage" role="button">Add List</Link></li>
-                                                       </ul>                                      
-                      }
-                      { !!this.state.authData ? null :  <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                                          <li><a className="btn" role="button" onClick={this.clickLogin}>Login</a></li>
-                                                        </ul> 
-                      }
+                        { !this.state.authData ? null : <ul id="nav-mobile" className="right hide-on-med-and-down">
+                                                          <li><Link to="addListPage" role="button">Add List</Link></li>
+                                                        </ul>                                      
+                        }
+                        { !!this.state.authData ? null : <ul id="nav-mobile" className="right hide-on-med-and-down">
+                                                           <li><a className="btn" role="button" onClick={this.clickLogin}>Login</a></li>
+                                                         </ul> 
+                        }
                     </div>
                   </nav>
                   <RouteHandler/>
-                </div>);
+                </div>
+                );
     }
 });
 
@@ -46,8 +51,8 @@ let routes = (
       {/*TODO: need to figure out why it cannot work*/}
       {/*<Route name="votePage" path=":itemKey" handler={VotePageHandler} />*/}
     </Route>
-    <Route name="listPage" path="/listPage/:listKey" handler={ListPageHandler} />
-    <Route name="addListPage" path="/addListPage/" handler={AddListPageHandler} />
+    <Route name="listPage"    path="/listPage/:listKey"    handler={ListPageHandler} />
+    <Route name="addListPage" path="/addListPage/"         handler={AddListPageHandler} />
     <Route name="addItemPage" path="/addItemPage/:listKey" handler={AddItemPageHandler} />
 
     <DefaultRoute handler={PopularPageHandler}/>

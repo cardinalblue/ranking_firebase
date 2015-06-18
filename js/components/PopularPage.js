@@ -40,7 +40,7 @@ let PopularPage = React.createClass({
     },
     createItem(item, index) {
         return <PopularItem key={index} onClickItem={this.clickItem} itemKey={item.key}
-                 itemName={item.name} itemRef={this.firebaseRef.child(item.name)}/>
+                 itemName={item.name} itemRef={this.firebaseRef.child(item.name)} itemImg={item.list[0].url}/>
     },
     render() {
       return <div>

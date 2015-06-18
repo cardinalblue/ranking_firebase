@@ -9,6 +9,7 @@ let PopularItem = React.createClass({
     },
     render() {
         return <li className="list-group-item">
+                <img src={this.props.itemImg} />
                 <span className="badge">{this.countVote()}</span>
                 <Link to="votePage"
                   params={{itemName:this.props.itemKey}}>{this.props.itemName}</Link>

@@ -1,5 +1,5 @@
 import React from 'react';
-import PopularItem from './PopularItem';
+import PopularList from './PopularList';
 import Utils from '../utils';
 
 let PopularPage = React.createClass({
@@ -11,17 +11,16 @@ let PopularPage = React.createClass({
         }.bind(this));
     },
     getInitialState() {
-        this.firebaseRef = new Firebase("https://prada-test.firebaseio.com/items/");
+        this.firebaseRef = new Firebase("https://prada-test.firebaseio.com/Lists/");
         return {items: []};
     },
     clickItem(itemName) {
         this.props.onItemClick(itemName);
     },
     createItem(item, index) {
-        return <PopularItem key={index} onClickItem={this.clickItem}
-                 itemKey={item.key}
-                 itemName={item.name}
-                 itemRef={this.firebaseRef.child(item.name)} itemImg={item.list[0].url}/>
+        return <PopularList key={index} onClickItem={this.clickItem}
+                 listKey={item.key}
+                 listName={item.name} />
     },
     render() {
       return <div>

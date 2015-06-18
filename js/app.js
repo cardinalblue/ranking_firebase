@@ -3,8 +3,9 @@ import Router from 'react-router';
 import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 
 import PopularPageHandler from './components/PopularPage.js';
-import VotePageHandler    from './components/VotePage.js';
-import AddPageHandler     from './components/AddPage.js';
+import ListPageHandler    from './components/ListPage.js';
+import AddListPageHandler from './components/AddListPage.js';
+import AddItemPageHandler from './components/AddItemPage.js'
 import auth from './auth';
 
 let App = React.createClass({
@@ -27,7 +28,7 @@ let App = React.createClass({
                             </a>
                         </div>
                         { !this.state.authData ? null : <ul className="nav navbar-nav navbar-right">
-                            <li><Link to="addPage" className="btn" role="button">Add List</Link></li>
+                            <li><Link to="addListPage" className="btn" role="button">Add List</Link></li>
                         </ul> }
                         { !!this.state.authData ? null : <ul className="nav navbar-nav navbar-right">
                             <li><a className="btn" role="button" onClick={this.clickLogin}>Login</a></li>
@@ -46,11 +47,11 @@ let routes = (
       {/*TODO: need to figure out why it cannot work*/}
       {/*<Route name="votePage" path=":itemKey" handler={VotePageHandler} />*/}
     </Route>
-    <Route name="votePage" path="/popularPage/:itemKey" handler={VotePageHandler} />
-    <Route name="addPage" path="/addPage/" handler={AddPageHandler} />
-    <Route name="addPage_withKey" path="/addPage/:itemKey" handler={AddPageHandler} />
+    <Route name="listPage" path="/listPage/:listKey" handler={ListPageHandler} />
+    <Route name="addListPage" path="/addListPage/" handler={AddListPageHandler} />
+    <Route name="addItemPage" path="/addItemPage/:listKey" handler={AddItemPageHandler} />
 
-    <DefaultRoute  handler={PopularPageHandler}/>
+    <DefaultRoute handler={PopularPageHandler}/>
   </Route>
 );
 

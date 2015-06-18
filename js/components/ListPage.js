@@ -1,10 +1,12 @@
 import React from 'react';
-import VoteItem from './VoteItem';
+import ListItem from './ListItem';
 import Utils from '../utils';
+import { DefaultRoute, Link, Route, RouteHandler, Navigation } from 'react-router';
 
-let VotePage = React.createClass({
+let ListPage = React.createClass({
+    mixins: [Navigation],
     getInitialState() {
-        this.itemRef = new Firebase("https://prada-test.firebaseio.com/items/" + this.props.params.itemKey);
+        this.itemRef = new Firebase("https://prada-test.firebaseio.com/Lists/" + this.props.params.listKey);
         return {items: []};
     },
     componentWillMount() {
@@ -17,7 +19,10 @@ let VotePage = React.createClass({
         }.bind(this));
     },
     createItem(item, index) {
-        return <VoteItem key={index} item={item} voteRef={this.itemRef.child("list").child(index).child("vote")} />
+        return <ListItem key={index} item={item} voteRef={this.itemRef.child("list").child(item.key).child("vote")} />
+    },
+    addItem(e) {
+        this.transitionTo('addItemPage', {listKey: this.props.params.listKey})
     },
     render() {
       return <div>
@@ -27,8 +32,9 @@ let VotePage = React.createClass({
                 <ul className="list-group">
                     {this.state.items.map(this.createItem)}
                 </ul>
+                <Link to="addItemPage" className="btn" role="button" params={{listKey: this.props.params.listKey}}>Add Item</Link>
              </div>;
     }
 });
 
-export default VotePage;
+export default ListPage;

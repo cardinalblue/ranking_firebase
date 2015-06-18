@@ -12,7 +12,7 @@ let VoteButton = React.createClass({
     }
 });
 
-let VoteItem = React.createClass({
+let ListItem = React.createClass({
     render() {
         var item = this.props.item;
         return <li className="list-group-item">
@@ -25,4 +25,4 @@ let VoteItem = React.createClass({
     }
 });
 
-export default VoteItem;
+export default ListItem;

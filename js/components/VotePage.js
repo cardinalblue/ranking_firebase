@@ -14,39 +14,38 @@ let VotePage = React.createClass({
     _toArray(obj) {
         var out = [];
         if (obj) {
-          if (this._isArray(obj)) {
-            out = obj;
-          } else if (typeof(obj) === "object") {
-            for (var key in obj) {
-              if (obj.hasOwnProperty(key)) {
-                out.push(obj[key]);
-              }
+            if (this._isArray(obj)) {
+                out = obj;
+            } else if (typeof(obj) === "object") {
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        out.push(obj[key]);
+                    }
+                }
             }
-          }
         }
         return out;
     },
     componentWillMount() {
         this.itemRef.on("value", function(dataSnapshot) {
-          var newState = {};
-          newState.title = dataSnapshot.child("name").val();
-          newState.items = this._toArray(dataSnapshot.child("list").val());
-          newState.items.sort(function(a, b) {return b.vote - a.vote});
-          this.setState(newState);
+            var newState = {};
+            newState.title = dataSnapshot.child("name").val();
+            newState.items = this._toArray(dataSnapshot.child("list").val());
+            newState.items.sort(function(a, b) {return b.vote - a.vote});
+            this.setState(newState);
         }.bind(this));
     },
     createItem(item, index) {
         return <VoteItem key={index} item={item} voteRef={this.itemRef.child("list").child(index).child("vote")} />
     },
     render() {
-      return <div>
-                <div className="jumbotron">
-                    <h1>{this.state.title}</h1>
-                </div>
-                <ul className="list-group">
-                    {this.state.items.map(this.createItem)}
-                </ul>
-             </div>;
+      return    (
+                    <div>
+                        <ul className="collection">
+                            {this.state.items.map(this.createItem)}
+                        </ul>
+                    </div>
+                );
     }
 });
 

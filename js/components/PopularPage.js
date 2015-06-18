@@ -44,10 +44,7 @@ let PopularPage = React.createClass({
     },
     render() {
       return <div>
-                <div className="jumbotron">
-                    <h1>Popular</h1>
-                </div>
-                <ul className="list-group">
+                <ul className="collection">
                     {this.state.items.map(this.createItem)}
                 </ul>
              </div>;

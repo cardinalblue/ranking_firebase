@@ -69,7 +69,6 @@ var AddPage = React.createClass({
         var userRef = new Firebase("https://prada-test.firebaseio.com/Users/" + uid);
         // save user data first
         userRef.set(this.state.authData, this.onSavedUser);
-        this.onSavedUser(null);
     },
     syncData(items) {
         this.items = items;

@@ -12,7 +12,9 @@ let PopularItem = React.createClass({
                 <img src={this.props.itemImg} />
                 <span className="badge">{this.countVote()}</span>
                 <Link to="votePage"
-                  params={{itemName:this.props.itemKey}}>{this.props.itemName}</Link>
+                  params={{itemKey:this.props.itemKey}}>{this.props.itemName}</Link>
+                <Link to="editPage"
+                  params={{itemKey:this.props.itemKey}}>Edit</Link>
                </li>;
     }
 });

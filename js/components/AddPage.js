@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from 'react-router';
 import auth from '../auth';
+import Utils from '../utils';
 import { DefaultRoute, Link, Route, RouteHandler, Navigation } from 'react-router';
 
 let AdderList = React.createClass({
@@ -43,13 +44,25 @@ let AdderList = React.createClass({
 var AddPage = React.createClass({
     mixins: [Navigation],
     getInitialState() {
-        return {title: "", authData: auth.getAuthData(), savedItem: null};
+        return {title: "", authData: auth.getAuthData(), savedItem: null, itemKey: this.props.params.itemKey};
     },
     onTitleChange(e) {
         this.setState({title: e.target.value});
     },
     onSavedList(e) {
-        if (!e) { this.transitionTo('votePage', {itemName: this.state.savedItem.key()}) }
+        if (!e) { this.transitionTo('votePage', {itemKey: this.state.savedItem.key()}) }
+    },
+    componentWillMount() {
+      if (!!this.state.itemKey) {
+        new Firebase("https://prada-test.firebaseio.com/items/" + this.state.itemKey)
+        .on("value", function(dataSnapshot) {
+          var newState = {};
+          newState.owner = dataSnapshot.child('owner').val();
+          newState.title = dataSnapshot.child('name').val();
+          newState.items = Utils.toArray(dataSnapshot.child('list').val());
+          this.setState(newState);
+        }.bind(this));
+      }
     },
     onSavedUser(e) {
         // TODO check the key is duplicate or not. if it's exist we will override this values

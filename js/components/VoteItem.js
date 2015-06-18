@@ -2,11 +2,13 @@ import React from 'react';
 
 let VoteButton = React.createClass({
     clickVote(e) {
+        // TODO sync vote number at local to increasing the response time
         var vote = this.props.voteNum + 1; // FIXME take care issue of race condition
         this.props.voteRef.set(vote);
     },
     render() {
-        return <button type="button" className="btn btn-default" onClick={this.clickVote}>Vote</button>;
+        return <span className="glyphicon glyphicon-ok" aria-hidden="true" onClick={this.clickVote}></span>;
+
     }
 });
 
@@ -14,7 +16,7 @@ let VoteItem = React.createClass({
     render() {
         var item = this.props.item;
         return <li className="list-group-item">
-            <span className="badge">{item.vote}</span>
+            {item.vote}
             <VoteButton voteRef={this.props.voteRef} voteNum={item.vote}/>
             <a href={item.url}>{item.name}</a>
             {item.url.indexOf('youtube') == -1 ? <img src={item.url} /> :

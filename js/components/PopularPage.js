@@ -1,33 +1,12 @@
 import React from 'react';
 import PopularItem from './PopularItem';
+import Utils from '../utils';
 
 let PopularPage = React.createClass({
-   /* Returns true if the inputted object is a JavaScript array */
-   _isArray2(obj) {
-       return (Object.prototype.toString.call(obj) === "[object Array]");
-   },
-   /* Converts a Firebase object to a JavaScript array */
-   _toArray2(obj) {
-       var out = [];
-       if (obj) {
-         if (this._isArray2(obj)) {
-           out = obj;
-         } else if (typeof(obj) === "object") {
-           for (var key in obj) {
-             if (obj.hasOwnProperty(key)) {
-               var v = obj[key];
-               v.key = key;
-               out.push(v);
-             }
-           }
-         }
-       }
-       return out;
-   },
     componentWillMount() {
         this.firebaseRef.on("value", function(dataSnapshot) {
           var newState = {};
-          newState.items = this._toArray2(dataSnapshot.val());
+          newState.items = Utils.toArray(dataSnapshot.val());
           this.setState(newState);
         }.bind(this));
     },
@@ -39,8 +18,10 @@ let PopularPage = React.createClass({
         this.props.onItemClick(itemName);
     },
     createItem(item, index) {
-        return <PopularItem key={index} onClickItem={this.clickItem} itemKey={item.key}
-                 itemName={item.name} itemRef={this.firebaseRef.child(item.name)} itemImg={item.list[0].url}/>
+        return <PopularItem key={index} onClickItem={this.clickItem}
+                 itemKey={item.key}
+                 itemName={item.name}
+                 itemRef={this.firebaseRef.child(item.name)} itemImg={item.list[0].url}/>
     },
     render() {
       return <div>

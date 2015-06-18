@@ -44,10 +44,11 @@ let routes = (
 
     <Route name="popularPage" path="/popularPage" handler={PopularPageHandler}>
       {/*TODO: need to figure out why it cannot work*/}
-      {/*<Route name="votePage" path=":itemName" handler={VotePageHandler} />*/}
+      {/*<Route name="votePage" path=":itemKey" handler={VotePageHandler} />*/}
     </Route>
-    <Route name="votePage" path="/popularPage/:itemName" handler={VotePageHandler} />
+    <Route name="votePage" path="/popularPage/:itemKey" handler={VotePageHandler} />
     <Route name="addPage" path="/addPage/" handler={AddPageHandler} />
+    <Route name="addPage_withKey" path="/addPage/:itemKey" handler={AddPageHandler} />
 
     <DefaultRoute  handler={PopularPageHandler}/>
   </Route>

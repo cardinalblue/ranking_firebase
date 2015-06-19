@@ -1,29 +1,5 @@
-import React from 'react';
-
-let VoteButton = React.createClass({
-    getInitialState() {
-        return {
-            voteNum: this.props.voteNum
-        };
-    },
-
-    clickVote(e) {
-        // FIXME take care issue of race condition
-        var vote = this.state.voteNum + 1;
-        this.props.voteRef.set(vote);
-        this.setState({voteNum: vote});
-    },
-
-    render() {
-        return (
-                <button type="button" 
-                        className="upVoteBtn btn-floating btn-large waves-effect waves-light pink accent-2" 
-                        onClick={this.clickVote}>
-                    <i className="mdi-hardware-keyboard-arrow-up" />
-                </button>
-            );
-    }
-});
+import React      from 'react';
+import VoteButton from './VoteButton';
 
 let ListItem = React.createClass({
     render() {

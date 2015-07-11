@@ -7,7 +7,7 @@ let ListPage = React.createClass({
     mixins: [Navigation],
     
     getInitialState() {
-        this.itemListRef = new Firebase("https://prada-test.firebaseio.com/Lists/" + this.props.params.listKey + "/list/");
+        this.itemListRef = new Firebase("https://rankings.firebaseio.com/Lists/" + this.props.params.listKey + "/list/");
         return {
           items: []
         };

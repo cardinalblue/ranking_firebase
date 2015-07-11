@@ -17,7 +17,7 @@ var AddItemPage = React.createClass({
     },
 
     componentWillMount() {
-      this.listRef = new Firebase("https://prada-test.firebaseio.com/Lists/" + this.state.listKey);
+      this.listRef = new Firebase("https://rankings.firebaseio.com/Lists/" + this.state.listKey);
       this.listRef.on("value", function(dataSnapshot) {
         var newState   = {};
         newState.title = dataSnapshot.child('name').val();

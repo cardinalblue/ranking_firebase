@@ -1,6 +1,6 @@
 module.exports = {
   login(cb) {
-      new Firebase("https://prada-test.firebaseio.com").authWithOAuthPopup("facebook", function(e, data) {
+      new Firebase("https://rankings.firebaseio.com").authWithOAuthPopup("facebook", function(e, data) {
         this.authData = data;
         if (cb) {
           cb(e, data);

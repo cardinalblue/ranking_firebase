@@ -1,5 +1,5 @@
 {
-  "firebase": "prada-test",
+  "firebase": "rankings",
   "public": ".",
   "ignore": [
     "firebase.json",

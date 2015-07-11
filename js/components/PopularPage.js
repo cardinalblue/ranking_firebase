@@ -12,7 +12,7 @@ let PopularPage = React.createClass({
     },
 
     getInitialState() {
-        this.firebaseRef = new Firebase("https://prada-test.firebaseio.com/Lists/");
+        this.firebaseRef = new Firebase("https://rankings.firebaseio.com/Lists/");
         return {
             items: []
         };

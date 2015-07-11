@@ -24,7 +24,7 @@ var AddListPage = React.createClass({
 
     onSavedUser(e) {
         // TODO check the key is duplicate or not. if it's exist we will override this values
-        var ref = new Firebase("https://prada-test.firebaseio.com/Lists/");
+        var ref = new Firebase("https://rankings.firebaseio.com/Lists/");
         this.state.savedItem = ref.push({
             owner: this.state.authData.uid,
             name:  this.state.title,
@@ -34,7 +34,7 @@ var AddListPage = React.createClass({
 
     clickSubmit(e) {
         var uid     = this.state.authData.uid;
-        var userRef = new Firebase("https://prada-test.firebaseio.com/Users/" + uid);
+        var userRef = new Firebase("https://rankings.firebaseio.com/Users/" + uid);
         // save user data first
         userRef.set(this.state.authData, this.onSavedUser);
     },

@@ -7,27 +7,29 @@ let ListPage = React.createClass({
     mixins: [Navigation],
     
     getInitialState() {
-        this.itemRef = new Firebase("https://prada-test.firebaseio.com/Lists/" + this.props.params.listKey);
+        this.itemListRef = new Firebase("https://prada-test.firebaseio.com/Lists/" + this.props.params.listKey + "/list/");
         return {
           items: []
         };
     },
 
     componentWillMount() {
-        this.itemRef.on("value", function(dataSnapshot) {
+        this.itemListRef.once("value", function(dataSnapshot) {
           var newState = {};
-          newState.title = dataSnapshot.child("name").val();
-          newState.items = Utils.toArray(dataSnapshot.child("list").val());
+          newState.items = Utils.toArray(dataSnapshot.val());
           newState.items.sort(function(a, b) {return b.vote - a.vote});
           this.setState(newState);
         }.bind(this));
+        // FIXME add/remove childs
+        return {
+          items: []
+        };
     },
-
     createItem(item, index) {
         return (
           <ListItem key={index} 
                     item={item} 
-                    voteRef={this.itemRef.child("list").child(item.key).child("vote")} 
+                    itemRef={this.itemListRef.child(item.key)}
           />);
     },
 
